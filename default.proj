@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+	<!--
+		Debug == msbuild default.proj
+		Release == msbuild default.proj /p:BuildConfiguration=Release
+	-->
+	<PropertyGroup>
+		<BuildConfiguration Condition="'$(BuildConfiguration)'==''">Debug</BuildConfiguration>
+		<BuildOuptutDirectory>$(MSBuildProjectDirectory)\build_output</BuildOuptutDirectory>
+		<NuGetExe>$(MSBuildProjectDirectory)\.nuget\nuget.exe</NuGetExe>
+	</PropertyGroup>
+	<Target Name="All">
+		<CallTarget Targets="Clean;Compile;Test" />
+		<CallTarget Targets="Package" Condition="'$(BuildConfiguration)'=='Release'" />
+	</Target>
+	<Target Name="Clean">
+		<RemoveDir Directories="
+			$(MSBuildProjectDirectory)\CommandPromptHereGen\bin;
+			$(MSBuildProjectDirectory)\CommandPromptHereGen\obj;
+			$(MSBuildProjectDirectory)\CommandPromptHereGenTests\bin;
+			$(MSBuildProjectDirectory)\CommandPromptHereGenTests\obj;
+			$(BuildOuptutDirectory)" />
+	</Target>
+	<Target Name="Compile">
+		<Exec
+			Command="&quot;$(NuGetExe)&quot; install &quot;$(MSBuildProjectDirectory)\.nuget\packages.config&quot; -OutputDirectory &quot;$(MSBuildProjectDirectory)\packages&quot;"
+			WorkingDirectory="$(MSBuildProjectDirectory)\.nuget" />
+		<Exec Command="&quot;$(NuGetExe)&quot; restore CommandPromptHereGen.sln"/>
+		<MSBuild Projects="CommandPromptHereGen.sln" Targets="Build" Properties="Configuration=$(BuildConfiguration)" />
+	</Target>
+	<Target Name="Package">
+		<MSBuild
+			Projects="$(MSBuildProjectDirectory)\CommandPromptHereGen\CommandPromptHereGen.csproj"
+			Targets="Package"
+			Properties="Configuration=$(BuildConfiguration);Platform=AnyCPU" />
+		<ItemGroup>
+			<PackageFiles Include="$(MSBuildProjectDirectory)\CommandPromptHereGen\obj\$(BuildConfiguration)\Package\PackageTmp\**\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(BuildOuptutDirectory)\%(RecursiveDir)" />
+	</Target>
+	<Target Name="Test">
+		<ItemGroup>
+			<NUnitRunner Include="$(MSBuildProjectDirectory)\packages\NUnit.Runners.*\tools\nunit-console.exe" />
+		</ItemGroup>
+		<PropertyGroup>
+			<TestAssembly>$(MSBuildProjectDirectory)\CommandPromptHereGenTests\bin\$(BuildConfiguration)\CommandPromptHereGenTests.dll</TestAssembly>
+		</PropertyGroup>
+		<Exec Command="&quot;%(NUnitRunner.FullPath)&quot; &quot;$(TestAssembly)&quot;" />
+	</Target>
+</Project>
