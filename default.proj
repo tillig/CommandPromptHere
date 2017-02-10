@@ -1,60 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
-	<!--
-		Debug == msbuild default.proj /p:BuildConfiguration=Debug
-		Release == msbuild default.proj
-	-->
-	<PropertyGroup>
-		<BuildConfiguration Condition="'$(BuildConfiguration)'==''">Release</BuildConfiguration>
-		<BuildOuptutDirectory>$(MSBuildProjectDirectory)\artifacts</BuildOuptutDirectory>
-	</PropertyGroup>
-	<Target Name="All">
-		<CallTarget Targets="Clean;Compile;Test" />
-		<CallTarget Targets="Package" Condition="'$(BuildConfiguration)'=='Release'" />
-	</Target>
-	<Target Name="Clean">
-		<RemoveDir Directories="
-			$(MSBuildProjectDirectory)\CommandPromptHereGen\bin;
-			$(MSBuildProjectDirectory)\CommandPromptHereGen\obj;
-			$(MSBuildProjectDirectory)\CommandPromptHereGenTests\bin;
-			$(MSBuildProjectDirectory)\CommandPromptHereGenTests\obj;
-			$(BuildOuptutDirectory)" />
-	</Target>
-	<Target Name="Compile">
-		<PropertyGroup>
-			<NuGetExe>$(MSBuildProjectDirectory)\toolset\nuget\nuget.exe</NuGetExe>
-		</PropertyGroup>
-		<Exec Command="&quot;$(NuGetExe)&quot; restore CommandPromptHereGen.sln"/>
-		<MSBuild Projects="CommandPromptHereGen.sln" Targets="Build" Properties="Configuration=$(BuildConfiguration)" />
-	</Target>
-	<Target Name="Package">
-		<MSBuild
-			Projects="$(MSBuildProjectDirectory)\CommandPromptHereGen\CommandPromptHereGen.csproj"
-			Targets="Package"
-			Properties="Configuration=$(BuildConfiguration);Platform=AnyCPU" />
-		<ItemGroup>
-			<PackageFiles Include="$(MSBuildProjectDirectory)\CommandPromptHereGen\obj\$(BuildConfiguration)\Package\PackageTmp\**\*.*" />
-		</ItemGroup>
-		<Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(BuildOuptutDirectory)\%(RecursiveDir)" />
-	</Target>
+    <!--
+        Debug == msbuild default.proj /p:BuildConfiguration=Debug
+        Release == msbuild default.proj
+    -->
+    <PropertyGroup>
+        <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+        <NuGetExe>$(MSBuildProjectDirectory)\toolset\nuget\nuget.exe</NuGetExe>
+        <MSBuildCommunityTasksPath>.</MSBuildCommunityTasksPath>
+        <ArtifactPath>$(MSBuildProjectDirectory)\artifacts</ArtifactPath>
+    </PropertyGroup>
+    <Import Project="$(MSBuildProjectDirectory)\toolset\msbuildcommunitytasks\MSBuild.Community.Tasks.Targets"/>
+    <ItemGroup>
+        <SolutionFile Include="$(MSBuildProjectDirectory)\CommandPromptHereGen.sln" />
+    </ItemGroup>
+    <Target Name="All">
+        <CallTarget Targets="Clean;Compile;Test;Package" />
+        <Message Text="Build complete."/>
+    </Target>
+    <Target Name="Clean">
+        <RemoveDir Directories="$(ArtifactPath)" />
+        <MSBuild Projects="%(SolutionFile.FullPath)" Condition="Exists('%(SolutionFile.FullPath)')" Targets="Clean"/>
+    </Target>
+    <Target Name="Compile">
+        <CallTarget Targets="_Tidy" />
+        <Message Text="Restoring solution-level NuGet packages." />
+        <Exec Command="&quot;$(NuGetExe)&quot; restore &quot;%(SolutionFile.FullPath)&quot;" />
+        <Message Text="Building the solution(s)." />
+        <MSBuild Projects="%(SolutionFile.FullPath)" Targets="Build" Properties="Configuration=$(Configuration);TreatWarningsAsErrors=$(TreatWarningsAsErrors)"/>
+    </Target>
+    <Target Name="Package">
+        <MSBuild
+            Projects="$(MSBuildProjectDirectory)\src\CommandPromptHereGen\CommandPromptHereGen.csproj"
+            Targets="Package"
+            Properties="Configuration=$(Configuration);Platform=AnyCPU" />
+        <ItemGroup>
+            <PackageFiles Include="$(MSBuildProjectDirectory)\src\CommandPromptHereGen\obj\$(BuildConfiguration)\Package\PackageTmp\**\*.*" />
+        </ItemGroup>
+        <Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(ArtifactPath)\%(RecursiveDir)" />
+    </Target>
     <Target Name="Test">
+        <PropertyGroup>
+            <XUnitRunner>$(MSBuildProjectDirectory)\packages\xunit.runner.console.2.1.0\tools\xunit.console.exe</XUnitRunner>
+        </PropertyGroup>
         <ItemGroup>
             <UnitTestAssembly Include="$(MSBuildProjectDirectory)\test\*.Test\bin\$(Configuration)\*.Test.dll" />
-            <NUnitExe Include="$(MSBuildProjectDirectory)\packages\NUnit.ConsoleRunner.*\tools\nunit3-console.exe" />
         </ItemGroup>
-        <PropertyGroup>
-            <NUnitExtensions Condition="'$(BUILD_VCS_NUMBER)' != ''">--teamcity</NUnitExtensions>
-        </PropertyGroup>
-        <MakeDir Directories="$(LogPath)" />
-        <Exec Command="&quot;%(NUnitExe.FullPath)&quot; &quot;@(UnitTestAssembly, '&quot; &quot;')&quot; --work=&quot;$(LogPath)&quot; $(NUnitExtensions)" />
+        <Exec Command="&quot;$(XUnitRunner)&quot; &quot;@(UnitTestAssembly->'%(FullPath)', '&quot; &quot;')&quot;" />
     </Target>
-	<Target Name="Test">
-		<PropertyGroup>
-			<XUnitRunner>$(MSBuildProjectDirectory)\packages\xunit.runner.console.2.1.0\tools\xunit.console.exe</XUnitRunner>
-		</PropertyGroup>
-		<ItemGroup>
-            <UnitTestAssembly Include="$(MSBuildProjectDirectory)\test\*.Test\bin\$(Configuration)\*.Test.dll" />
-		</ItemGroup>
-		<Exec Command="&quot;%(XUnitRunner.FullPath)&quot; &quot;@(UnitTestAssembly->'%(FullPath)', '&quot; &quot;'')&quot;" />
-	</Target>
+    <Target Name="_Tidy">
+        <ItemGroup>
+            <ConfigFiles
+                Include="%(SolutionFile.RootDir)%(SolutionFile.Directory)\**\*.config"
+                Exclude="%(SolutionFile.RootDir)%(SolutionFile.Directory)\**\packages.config;
+                        %(SolutionFile.RootDir)%(SolutionFile.Directory)\**\NuGet.config;
+                        %(SolutionFile.RootDir)%(SolutionFile.Directory)\**\repositories.config;
+                        %(SolutionFile.RootDir)%(SolutionFile.Directory)\.vs\**\*.*" />
+        </ItemGroup>
+        <Message Text="Cleaning up configuration file formatting." />
+        <!--
+            * HTML Tidy cleans up the config file XML and places it in a temp location (filename.formatted)
+            * A post-formatting task cleans up key/value pair nodes to be flat and easier to read.
+            * The formatted config file is copied over the top of the original XML file and the temp file is deleted.
+        -->
+        <Exec Command="tidy.exe --input-xml yes --output-xml yes --preserve-entities yes --indent yes --indent-spaces 4 --input-encoding utf8 --indent-attributes yes --wrap 0 &quot;%(ConfigFiles.FullPath)&quot; > &quot;%(ConfigFiles.FullPath).formatted&quot;" WorkingDirectory="$(MSBuildProjectDirectory)\toolset\tidy" Condition="'%(ConfigFiles.FullPath)'!=''" />
+        <FileUpdate Files="%(ConfigFiles.FullPath).formatted" Regex="&lt;add\s+(key|name)=&quot;([^&quot;]*)&quot;\s+value=&quot;([^&quot;]*)&quot;\s+/&gt;" ReplacementText="&lt;add $1=&quot;$2&quot; value=&quot;$3&quot; /&gt;" Condition="'%(ConfigFiles.FullPath)'!=''" />
+        <Copy DestinationFiles="%(ConfigFiles.FullPath)" SourceFiles="%(ConfigFiles.FullPath).formatted" Condition="'%(ConfigFiles.FullPath)'!=''" />
+        <Delete Files="%(ConfigFiles.FullPath).formatted" Condition="'%(ConfigFiles.FullPath)'!=''" />
+    </Target>
 </Project>
