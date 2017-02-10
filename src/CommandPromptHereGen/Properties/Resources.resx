@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CmdStrategy_Accelerator" xml:space="preserve">
     <value>Command &amp;Prompt Here</value>
@@ -237,5 +237,23 @@ UDHERE="Software\Microsoft\Windows\CurrentVersion\Uninstall\{0}"</value>
   </data>
   <data name="VS2015DevCmdStrategy_Name" xml:space="preserve">
     <value>VS 2015 Developer Command Prompt</value>
+  </data>
+  <data name="VS2017CommunityDevCmdStrategy_Accelerator" xml:space="preserve">
+    <value>VS 201&amp;7 Community Prompt Here</value>
+  </data>
+  <data name="VS2017CommunityDevCmdStrategy_Name" xml:space="preserve">
+    <value>VS 2017 Community Command Prompt</value>
+  </data>
+  <data name="VS2017EnterpriseDevCmdStrategy_Accelerator" xml:space="preserve">
+    <value>VS 201&amp;7 Enterprise Prompt Here</value>
+  </data>
+  <data name="VS2017EnterpriseDevCmdStrategy_Name" xml:space="preserve">
+    <value>VS 2017 Enterprise Command Prompt</value>
+  </data>
+  <data name="VS2017ProfessionalDevCmdStrategy_Accelerator" xml:space="preserve">
+    <value>VS 201&amp;7 Professional Prompt Here</value>
+  </data>
+  <data name="VS2017ProfessionalDevCmdStrategy_Name" xml:space="preserve">
+    <value>VS 2017 Professional Command Prompt</value>
   </data>
 </root>

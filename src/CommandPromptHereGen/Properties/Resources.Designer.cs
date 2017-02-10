@@ -286,5 +286,59 @@ namespace CommandPromptHereGen.Properties {
                 return ResourceManager.GetString("VS2015DevCmdStrategy_Name", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VS 201&amp;7 Community Prompt Here.
+        /// </summary>
+        public static string VS2017CommunityDevCmdStrategy_Accelerator {
+            get {
+                return ResourceManager.GetString("VS2017CommunityDevCmdStrategy_Accelerator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VS 2017 Community Command Prompt.
+        /// </summary>
+        public static string VS2017CommunityDevCmdStrategy_Name {
+            get {
+                return ResourceManager.GetString("VS2017CommunityDevCmdStrategy_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VS 201&amp;7 Enterprise Prompt Here.
+        /// </summary>
+        public static string VS2017EnterpriseDevCmdStrategy_Accelerator {
+            get {
+                return ResourceManager.GetString("VS2017EnterpriseDevCmdStrategy_Accelerator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VS 2017 Enterprise Command Prompt.
+        /// </summary>
+        public static string VS2017EnterpriseDevCmdStrategy_Name {
+            get {
+                return ResourceManager.GetString("VS2017EnterpriseDevCmdStrategy_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VS 201&amp;7 Professional Prompt Here.
+        /// </summary>
+        public static string VS2017ProfessionalDevCmdStrategy_Accelerator {
+            get {
+                return ResourceManager.GetString("VS2017ProfessionalDevCmdStrategy_Accelerator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VS 2017 Professional Command Prompt.
+        /// </summary>
+        public static string VS2017ProfessionalDevCmdStrategy_Name {
+            get {
+                return ResourceManager.GetString("VS2017ProfessionalDevCmdStrategy_Name", resourceCulture);
+            }
+        }
     }
 }
