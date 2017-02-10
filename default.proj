@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
 	<!--
-		Debug == msbuild default.proj
-		Release == msbuild default.proj /p:BuildConfiguration=Release
+		Debug == msbuild default.proj /p:BuildConfiguration=Debug
+		Release == msbuild default.proj
 	-->
 	<PropertyGroup>
-		<BuildConfiguration Condition="'$(BuildConfiguration)'==''">Debug</BuildConfiguration>
-		<BuildOuptutDirectory>$(MSBuildProjectDirectory)\build_output</BuildOuptutDirectory>
-		<NuGetExe>$(MSBuildProjectDirectory)\.nuget\nuget.exe</NuGetExe>
+		<BuildConfiguration Condition="'$(BuildConfiguration)'==''">Release</BuildConfiguration>
+		<BuildOuptutDirectory>$(MSBuildProjectDirectory)\artifacts</BuildOuptutDirectory>
 	</PropertyGroup>
 	<Target Name="All">
 		<CallTarget Targets="Clean;Compile;Test" />
@@ -22,9 +21,9 @@
 			$(BuildOuptutDirectory)" />
 	</Target>
 	<Target Name="Compile">
-		<Exec
-			Command="&quot;$(NuGetExe)&quot; install &quot;$(MSBuildProjectDirectory)\.nuget\packages.config&quot; -OutputDirectory &quot;$(MSBuildProjectDirectory)\packages&quot;"
-			WorkingDirectory="$(MSBuildProjectDirectory)\.nuget" />
+		<PropertyGroup>
+			<NuGetExe>$(MSBuildProjectDirectory)\toolset\nuget\nuget.exe</NuGetExe>
+		</PropertyGroup>
 		<Exec Command="&quot;$(NuGetExe)&quot; restore CommandPromptHereGen.sln"/>
 		<MSBuild Projects="CommandPromptHereGen.sln" Targets="Build" Properties="Configuration=$(BuildConfiguration)" />
 	</Target>
@@ -38,13 +37,24 @@
 		</ItemGroup>
 		<Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(BuildOuptutDirectory)\%(RecursiveDir)" />
 	</Target>
+    <Target Name="Test">
+        <ItemGroup>
+            <UnitTestAssembly Include="$(MSBuildProjectDirectory)\test\*.Test\bin\$(Configuration)\*.Test.dll" />
+            <NUnitExe Include="$(MSBuildProjectDirectory)\packages\NUnit.ConsoleRunner.*\tools\nunit3-console.exe" />
+        </ItemGroup>
+        <PropertyGroup>
+            <NUnitExtensions Condition="'$(BUILD_VCS_NUMBER)' != ''">--teamcity</NUnitExtensions>
+        </PropertyGroup>
+        <MakeDir Directories="$(LogPath)" />
+        <Exec Command="&quot;%(NUnitExe.FullPath)&quot; &quot;@(UnitTestAssembly, '&quot; &quot;')&quot; --work=&quot;$(LogPath)&quot; $(NUnitExtensions)" />
+    </Target>
 	<Target Name="Test">
-		<ItemGroup>
-			<NUnitRunner Include="$(MSBuildProjectDirectory)\packages\NUnit.Runners.*\tools\nunit-console.exe" />
-		</ItemGroup>
 		<PropertyGroup>
-			<TestAssembly>$(MSBuildProjectDirectory)\CommandPromptHereGenTests\bin\$(BuildConfiguration)\CommandPromptHereGenTests.dll</TestAssembly>
+			<XUnitRunner>$(MSBuildProjectDirectory)\packages\xunit.runner.console.2.1.0\tools\xunit.console.exe</XUnitRunner>
 		</PropertyGroup>
-		<Exec Command="&quot;%(NUnitRunner.FullPath)&quot; &quot;$(TestAssembly)&quot;" />
+		<ItemGroup>
+            <UnitTestAssembly Include="$(MSBuildProjectDirectory)\test\*.Test\bin\$(Configuration)\*.Test.dll" />
+		</ItemGroup>
+		<Exec Command="&quot;%(XUnitRunner.FullPath)&quot; &quot;@(UnitTestAssembly->'%(FullPath)', '&quot; &quot;'')&quot;" />
 	</Target>
 </Project>

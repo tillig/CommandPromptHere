@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using CommandPromptHereGen.PromptStrategies;
 using Xunit;
 
-namespace CommandPromptHereGenTests.PromptStrategies
+namespace CommandPromptHereGen.Test.PromptStrategies
 {
 	public class CommonFixture
 	{
