@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" EnableSessionState="False" EnableTheming="false" EnableViewState="true" CodeBehind="~/CmdHereGen.aspx.cs" Inherits="CommandPromptHereGen.Views.WebForms.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableSessionState="False" EnableTheming="false" EnableViewState="true" CodeBehind="Default.aspx.cs" Inherits="CommandPromptHereGen.Views.WebForms.Default" %>
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://ogp.me/ns#" itemscope="true" itemtype="http://schema.org/Product">
 <head runat="server">
@@ -11,8 +11,6 @@
 	<meta property="og:image" content="" />
 	<meta property="og:site_name" content="Paraesthesia" />
 	<meta property="fb:admins" content="552085688" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
 	<link href="~/Content/themes/pepper-grinder/jquery.ui.all.css" type="text/css" rel="Stylesheet" />
 	<style type="text/css">
 		body
@@ -22,6 +20,10 @@
 		legend
 		{
 			font-weight: bold;
+		}
+		div.accordion-title
+		{
+			padding: 5px 30px;
 		}
 		div.editor-label,
 		div.editor-field
@@ -61,20 +63,6 @@
 			padding: 5px;
 		}
 	</style>
-	<script type="text/javascript">
-		$(function () {
-			$("input:text, textarea").addClass("ui-corner-all");
-			$("button, input:submit, a.button").button();
-			$(".accordion").accordion({
-				"header": "div.accordion-title",
-				"collapsible": true,
-				"active": false,
-				"change": function (event, ui) {
-					ui.oldHeader.blur();
-				}
-			});
-		});
-	</script>
 </head>
 <body>
 <%-- Facebook SDK for Like button --%>
@@ -89,6 +77,13 @@
 	} (document, 'script', 'facebook-jssdk'));
 </script>
 <form id="form1" runat="server">
+	<asp:ScriptManager runat="server">
+		<Scripts>
+			<asp:ScriptReference Name="jquery" />
+			<asp:ScriptReference Name="jquery.ui.combined" />            
+		</Scripts>
+	</asp:ScriptManager>
+
 	<h1>Windows "Command Prompt Here" Generator</h1>
 	<asp:Wizard ID="CommandPromptHereWizard" runat="server" ActiveStepIndex="0" 
 		DisplaySideBar="False" 
@@ -105,7 +100,7 @@
 				<p><strong>Do so at your own risk.</strong> These values will be used in the .INF installer file that gets generated. Not much validation happens here, so you can really hose yourself if you do it wrong.</p>
 				<p><strong>Select "Finish" to download the prompt</strong> and see installation instructions.</p>
 				<div class="accordion">
-					<div class="accordion-title"><a href="#">Customize Values</a></div>
+					<div class="accordion-title">Customize Values</div>
 					<div>
 						<p>Hover over each text field to see additional description of what it means.</p>
 						<div class="item">
@@ -205,6 +200,22 @@
 			po.src = 'https://apis.google.com/js/plusone.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 		})();
+	</script>
+
+	<script type="text/javascript">
+		$(function () {
+			$("input:text, textarea").addClass("ui-corner-all");
+			$("button, input:submit, a.button").button();
+			$(".accordion").accordion({
+				"header": "div.accordion-title",
+				"heightStyle": "content",
+				"collapsible": true,
+				"active": false,
+				"change": function (event, ui) {
+					ui.oldHeader.blur();
+				}
+			});
+		});
 	</script>
 </body>
 </html>
