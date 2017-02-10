@@ -35,7 +35,7 @@
             Targets="Package"
             Properties="Configuration=$(Configuration);Platform=AnyCPU" />
         <ItemGroup>
-            <PackageFiles Include="$(MSBuildProjectDirectory)\src\CommandPromptHereGen\obj\$(BuildConfiguration)\Package\PackageTmp\**\*.*" />
+            <PackageFiles Include="$(MSBuildProjectDirectory)\src\CommandPromptHereGen\obj\$(Configuration)\Package\PackageTmp\**\*.*" />
         </ItemGroup>
         <Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(ArtifactPath)\%(RecursiveDir)" />
     </Target>
