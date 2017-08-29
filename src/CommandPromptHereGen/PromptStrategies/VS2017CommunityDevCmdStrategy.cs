@@ -28,7 +28,7 @@
 			// The /v:on allows for delayed environment variable processing using
 			// !var! syntax instead of %var% syntax. Otherwise you can't expand
 			// environment variables like %VS100COMNTOOLS% because %V has special meaning.
-			get { return @"%11%\cmd.exe /v:on /k cd /d ""%1"" && ""!ProgramFiles(x86)!\Microsoft Visual Studio\2017\Community\VsDevCmd.bat"""; }
+			get { return @"%11%\cmd.exe /v:on /k cd /d ""%1"" && ""!ProgramFiles(x86)!\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"""; }
 		}
 
 		/// <summary>
