@@ -1,0 +1,32 @@
+{
+  "configurations": [
+    {
+      "args": [
+      ],
+      "cwd": "${workspaceFolder}/src/CommandPromptHereGen",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "name": ".NET Core Launch (web)",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/CommandPromptHereGen/bin/Debug/netcoreapp3.1/CommandPromptHereGen.dll",
+      "request": "launch",
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      },
+      "stopAtEntry": false,
+      "type": "coreclr"
+    },
+    {
+      "name": ".NET Core Attach",
+      "processId": "${command:pickProcess}",
+      "request": "attach",
+      "type": "coreclr"
+    }
+  ],
+  "version": "0.2.0"
+}
