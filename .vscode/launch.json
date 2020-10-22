@@ -1,31 +1,15 @@
 {
   "configurations": [
     {
-      "args": [
-      ],
-      "cwd": "${workspaceFolder}/src/CommandPromptHereGen",
-      "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "name": ".NET Core Launch (web)",
-      "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/CommandPromptHereGen/bin/Debug/netcoreapp3.1/CommandPromptHereGen.dll",
+      "name": "Chrome",
+      "preLaunchTask": "Start",
       "request": "launch",
-      "serverReadyAction": {
-        "action": "openExternally",
-        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
       },
-      "sourceFileMap": {
-        "/Views": "${workspaceFolder}/Views"
-      },
-      "stopAtEntry": false,
-      "type": "coreclr"
-    },
-    {
-      "name": ".NET Core Attach",
-      "processId": "${command:pickProcess}",
-      "request": "attach",
-      "type": "coreclr"
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src"
     }
   ],
   "version": "0.2.0"

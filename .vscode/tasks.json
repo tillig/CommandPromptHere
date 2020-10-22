@@ -1,60 +1,48 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "build",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/src/CommandPromptHereGen/CommandPromptHereGen.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "publish",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/src/CommandPromptHereGen/CommandPromptHereGen.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "watch",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/src/CommandPromptHereGen/CommandPromptHereGen.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "build",
-            "command": "dotnet",
-            "type": "shell",
-            "args": [
-                "build",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "silent"
-            },
-            "problemMatcher": "$msCompile"
+  "tasks": [
+    {
+      "group": {
+        "isDefault": true,
+        "kind": "build"
+      },
+      "isBackground": true,
+      "presentation": {
+        "reveal": "never"
+      },
+      "problemMatcher": "$tsc-watch",
+      "script": "watch",
+      "type": "npm"
+    },
+    {
+      "isBackground": true,
+      "label": "Start",
+      "options": {
+        "env": {
+          "BROWSER": "none"
         }
-    ]
+      },
+      "problemMatcher": {
+        "applyTo": "closedDocuments",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": {
+            "regexp": "(.*?)"
+          },
+          "endsPattern": {
+            "regexp": "http://localhost:3000"
+          }
+        },
+        "fileLocation": [
+          "relative",
+          "${cwd}"
+        ],
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "source": "ts"
+      },
+      "script": "start",
+      "type": "npm"
+    }
+  ],
+  "version": "2.0.0"
 }
