@@ -6,16 +6,19 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
     "google"
   ],
-  "overrides": [{
-    "files": [
-      "**/*.js"
-    ],
-    "rules": {
-      "@typescript-eslint/explicit-function-return-type": "off"
+  "overrides": [
+    {
+      "files": [
+        "**/*.js"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
     }
-  }],
+  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -67,5 +70,28 @@
       "always"
     ],
     "semi": "error"
+  },
+  "settings": {
+    "linkComponents": [
+      "Hyperlink",
+      {
+        "linkAttribute": "to",
+        "name": "Link"
+      }
+    ],
+    "propWrapperFunctions": [
+      "forbidExtraProps",
+      {
+        "object": "Object",
+        "property": "freeze"
+      }
+    ],
+    "react": {
+      "createClass": "createReactClass",
+      "flowVersion": "0.53",
+      "fragment": "Fragment",
+      "pragma": "React",
+      "version": "detect"
+    }
   }
 }
