@@ -9,6 +9,7 @@ import './App.css';
 
 // TODO: Make this a multi-step wizard style form.
 // https://css-tricks.com/the-magic-of-react-based-multi-step-forms/
+// https://www.typescriptlang.org/docs/handbook/jsx.html
 // TODO: Setup GitHub Actions for build.
 
 /**
