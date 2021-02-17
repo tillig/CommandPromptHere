@@ -1,13 +1,14 @@
 import { Properties } from './Properties';
-import Step1 from './Step1';
-import Step2 from './Step2';
-import Step3 from './Step3';
+import { State } from './State';
+import { Step1 } from './Step1';
+import { Step2 } from './Step2';
+import { Step3 } from './Step3';
 import React from 'react';
 
 /**
  * Main form that orchestrates the wizard.
  */
-export class MasterForm extends React.Component<Properties, any> {
+export class MasterForm extends React.Component<Properties, State> {
   /**
    * Constructor.
    * @param {Properties} props The properties for the workflow.
@@ -17,9 +18,6 @@ export class MasterForm extends React.Component<Properties, any> {
     // TODO: Set the initial input values
     this.state = {
       currentStep: 1,
-      email: '',
-      username: '',
-      password: '',
     };
 
     // this.handleChange = this.handleChange.bind(this);
@@ -52,14 +50,56 @@ export class MasterForm extends React.Component<Properties, any> {
   }
 
   /**
+   * Gets the 'previous' button for the wizard.
+   */
+  get previousButton(): JSX.Element | null {
+    const currentStep = this.state.currentStep;
+    // If the current step is not 1, then render the "previous" button
+    if (currentStep !== 1) {
+      return (
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={this._prev}>
+          Previous
+        </button>
+      );
+    }
+    // ...else return nothing
+    return null;
+  }
+
+  /**
+   * Gets the 'next' button for the wizard.
+   */
+  get nextButton(): JSX.Element | null {
+    const currentStep = this.state.currentStep;
+    // If the current step is not 3, then render the "next" button
+    if (currentStep < 3) {
+      return (
+        <button
+          className="btn btn-primary float-right"
+          type="button"
+          onClick={this._next}>
+          Next
+        </button>
+      );
+    }
+    // ...else render nothing
+    return null;
+  }
+
+  /**
    * Handle data change to update state.
    * @param {any} event The event that was raised to indicate a change.
    */
   handleChange(event: any): void {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value,
-    });
+    // TODO: Set state when things change
+    console.log(event);
+    // const { name, value } = event.target;
+    // this.setState({
+    //   [name]: value,
+    // });
   }
 
   /**
@@ -85,31 +125,35 @@ export class MasterForm extends React.Component<Properties, any> {
    */
   render(): JSX.Element | null {
     return (
-      <React.Fragment>
-        <h1>A Wizard Form!</h1>
+      <form onSubmit={this.handleSubmit}>
+        <React.Fragment>
+          <h1>A Wizard Form!</h1>
 
-      Step {this.state.currentStep}
+        Step {this.state.currentStep}
 
-        <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
 
-          // Render the form steps and pass in the required props
-          <Step1
-            currentStep={this.state.currentStep}
-            handleChange={this.handleChange}
-            // email={this.state.email}
-          />
-          <Step2
-            currentStep={this.state.currentStep}
-            handleChange={this.handleChange}
-            // username={this.state.username}
-          />
-          <Step3
-            currentStep={this.state.currentStep}
-            handleChange={this.handleChange}
-            // password={this.state.password}
-          />
-        </form>
-      </React.Fragment>
+            // Render the form steps and pass in the required props
+            <Step1
+              currentStep={this.state.currentStep}
+              // handleChange={this.handleChange}
+              // email={this.state.email}
+            />
+            <Step2
+              currentStep={this.state.currentStep}
+              // handleChange={this.handleChange}
+              // username={this.state.username}
+            />
+            <Step3
+              currentStep={this.state.currentStep}
+              // handleChange={this.handleChange}
+              // password={this.state.password}
+            />
+          </form>
+        </React.Fragment>
+        {this.previousButton}
+        {this.nextButton}
+      </form>
     );
   }
 }
