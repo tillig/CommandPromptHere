@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { MasterForm } from './MasterForm';
 import './App.css';
 
 // TODO: Make this a multi-step wizard style form.
@@ -36,7 +36,7 @@ function App(): JSX.Element {
         <Container>
           <Row className="justify-content-md-center">
             <Col>
-              <Button>button</Button>
+              <MasterForm currentStep={1} />
             </Col>
           </Row>
         </Container>

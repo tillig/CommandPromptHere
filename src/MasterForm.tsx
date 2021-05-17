@@ -21,8 +21,8 @@ export class MasterForm extends React.Component<Properties, State> {
     };
 
     // this.handleChange = this.handleChange.bind(this);
-    // this._next = this._next.bind(this);
-    // this._prev = this._prev.bind(this);
+    this._next = this._next.bind(this);
+    this._prev = this._prev.bind(this);
   }
 
   /**
@@ -127,29 +127,23 @@ export class MasterForm extends React.Component<Properties, State> {
     return (
       <form onSubmit={this.handleSubmit}>
         <React.Fragment>
-          <h1>A Wizard Form!</h1>
+          <h1>Command Prompt Here</h1>
 
-        Step {this.state.currentStep}
-
-          <form onSubmit={this.handleSubmit}>
-
-            // Render the form steps and pass in the required props
-            <Step1
-              currentStep={this.state.currentStep}
-              // handleChange={this.handleChange}
-              // email={this.state.email}
-            />
-            <Step2
-              currentStep={this.state.currentStep}
-              // handleChange={this.handleChange}
-              // username={this.state.username}
-            />
-            <Step3
-              currentStep={this.state.currentStep}
-              // handleChange={this.handleChange}
-              // password={this.state.password}
-            />
-          </form>
+          <Step1
+            currentStep={this.state.currentStep}
+            // handleChange={this.handleChange}
+            // email={this.state.email}
+          />
+          <Step2
+            currentStep={this.state.currentStep}
+            // handleChange={this.handleChange}
+            // username={this.state.username}
+          />
+          <Step3
+            currentStep={this.state.currentStep}
+            // handleChange={this.handleChange}
+            // password={this.state.password}
+          />
         </React.Fragment>
         {this.previousButton}
         {this.nextButton}

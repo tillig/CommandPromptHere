@@ -16,17 +16,19 @@ export class Step1 extends React.Component<Properties, State> {
       return null;
     }
     return (
-      <div className="form-group">
-        <label htmlFor="email">Email address</label>
-        <input
-          className="form-control"
-          id="email"
-          name="email"
-          type="text"
-          placeholder="Enter email"
-        // value={this.props.email} // Prop: The email input data
-        // onChange={this.props.handleChange} // Prop: Puts data into state
-        />
+      <div>
+        <p>This wizard allows you to generate a custom &quot;Command Prompt Here&quot; context menu item for Windows. After selecting the prompt and customizing text, a small installer will be generated for you so you can use your prompt.</p>
+        <p>First, select the command prompt you&apos;d like to appear in the context menu.</p>
+        <div className="form-group">
+          <label htmlFor="commandList">Select command prompt</label>
+          <select
+            className="form-control"
+            id="commandList"
+            name="commandList"
+          // value={this.props.email} // Prop: The email input data
+          // onChange={this.props.handleChange} // Prop: Puts data into state
+          />
+        </div>
       </div>
     );
   }
