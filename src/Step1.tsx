@@ -15,6 +15,7 @@ export class Step1 extends React.Component<Properties, State> {
     if (this.props.currentStep !== 1) {
       return null;
     }
+    // TODO: Populate the select list with the set of prompt strategies.
     return (
       <div>
         <p>This wizard allows you to generate a custom &quot;Command Prompt Here&quot; context menu item for Windows. After selecting the prompt and customizing text, a small installer will be generated for you so you can use your prompt.</p>
@@ -27,7 +28,8 @@ export class Step1 extends React.Component<Properties, State> {
             name="commandList"
           // value={this.props.email} // Prop: The email input data
           // onChange={this.props.handleChange} // Prop: Puts data into state
-          />
+          >
+          </select>
         </div>
       </div>
     );
