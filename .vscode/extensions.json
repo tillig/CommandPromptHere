@@ -1,5 +1,8 @@
 {
   "recommendations": [
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "stkb.rewrap",
+    "travisillig.vscode-json-stable-stringify",
+    "msjsdiag.debugger-for-chrome"
   ]
 }

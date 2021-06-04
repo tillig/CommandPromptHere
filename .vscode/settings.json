@@ -1,4 +1,7 @@
 {
+  "cSpell.words": [
+    "windowspowershell"
+  ],
   "files.exclude": {
     "out": false
   },
