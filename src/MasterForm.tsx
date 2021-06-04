@@ -4,6 +4,7 @@ import { Step1 } from './Step1';
 import { Step2 } from './Step2';
 import { Step3 } from './Step3';
 import React from 'react';
+import { PromptStrategies } from './PromptStrategies';
 
 /**
  * Main form that orchestrates the wizard.
@@ -15,14 +16,15 @@ export class MasterForm extends React.Component<Properties, State> {
    */
   constructor(props: Properties) {
     super(props);
-    // TODO: Set the initial input values
     this.state = {
       currentStep: 1,
+      promptId: undefined,
+      prompt: undefined,
     };
 
-    // this.handleChange = this.handleChange.bind(this);
     this._next = this._next.bind(this);
     this._prev = this._prev.bind(this);
+    this.handlePromptSelectionChange = this.handlePromptSelectionChange.bind(this);
   }
 
   /**
@@ -90,16 +92,25 @@ export class MasterForm extends React.Component<Properties, State> {
   }
 
   /**
-   * Handle data change to update state.
-   * @param {any} event The event that was raised to indicate a change.
-   */
-  handleChange(event: any): void {
-    // TODO: Set state when things change
-    console.log(event);
-    // const { name, value } = event.target;
-    // this.setState({
-    //   [name]: value,
-    // });
+ * Handles a change in selection of the prompt.
+ * @param {any} event The event that was raised to indicate a change.
+ */
+  handlePromptSelectionChange(event: any): void {
+    const value = event.target.value as string;
+    const found = Object.entries(PromptStrategies).find((pair) => pair[0] === value);
+    if (found) {
+      this.setState({
+        currentStep: this.state.currentStep,
+        promptId: found[0],
+        prompt: found[1],
+      });
+    } else {
+      this.setState({
+        currentStep: this.state.currentStep,
+        promptId: undefined,
+        prompt: undefined,
+      });
+    }
   }
 
   /**
@@ -131,18 +142,15 @@ export class MasterForm extends React.Component<Properties, State> {
 
           <Step1
             currentStep={this.state.currentStep}
-            // handleChange={this.handleChange}
-            // email={this.state.email}
+            prompt={this.state.prompt}
+            promptId={this.state.promptId}
+            handleChange={this.handlePromptSelectionChange}
           />
           <Step2
             currentStep={this.state.currentStep}
-            // handleChange={this.handleChange}
-            // username={this.state.username}
           />
           <Step3
             currentStep={this.state.currentStep}
-            // handleChange={this.handleChange}
-            // password={this.state.password}
           />
         </React.Fragment>
         {this.previousButton}
