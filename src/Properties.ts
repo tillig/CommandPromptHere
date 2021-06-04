@@ -7,14 +7,26 @@ import { PromptStrategy } from './PromptStrategies';
 export interface Properties
 {
   currentStep: number;
+
+}
+
+export interface StepProperties extends Properties
+{
+  promptId: string | undefined;
 }
 
 /**
  * Properties passed in to render Step 1.
  */
-export interface Step1Properties extends Properties
+export interface Step1Properties extends StepProperties
 {
   handleChange: React.ChangeEventHandler<HTMLSelectElement>;
+}
+
+/**
+ * Properties passed in to render Step 2.
+ */
+export interface Step2Properties extends StepProperties {
   prompt: PromptStrategy | undefined;
-  promptId: string | undefined;
+  handleChange: React.ChangeEventHandler<HTMLInputElement>;
 }

@@ -18,13 +18,14 @@ export class MasterForm extends React.Component<Properties, State> {
     super(props);
     this.state = {
       currentStep: 1,
-      promptId: undefined,
-      prompt: undefined,
+      promptId: PromptStrategies[0].id,
+      prompt: PromptStrategies[0],
     };
 
     this._next = this._next.bind(this);
     this._prev = this._prev.bind(this);
     this.handlePromptSelectionChange = this.handlePromptSelectionChange.bind(this);
+    this.handlePromptDetailChange = this.handlePromptDetailChange.bind(this);
   }
 
   /**
@@ -92,17 +93,34 @@ export class MasterForm extends React.Component<Properties, State> {
   }
 
   /**
- * Handles a change in selection of the prompt.
- * @param {any} event The event that was raised to indicate a change.
- */
-  handlePromptSelectionChange(event: any): void {
-    const value = event.target.value as string;
-    const found = Object.entries(PromptStrategies).find((pair) => pair[0] === value);
+   * Handles a change in specific prompt details.
+   * @param {React.ChangeEvent<HTMLInputElement>} event The event that was raised to indicate a change.
+   */
+  handlePromptDetailChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    let { id, value } = event.target;
+    id = id.split('_')[1];
+    const clone = Object.assign({}, this.state.prompt) as any;
+    clone[id] = value;
+    this.setState({
+      currentStep: this.state.currentStep,
+      promptId: this.state.promptId,
+      prompt: clone,
+    });
+  }
+
+  /**
+   * Handles a change in selection of the prompt.
+   * @param {React.ChangeEvent<HTMLSelectElement>} event The event that was raised to indicate a change.
+   */
+  handlePromptSelectionChange(event: React.ChangeEvent<HTMLSelectElement>): void {
+    const value = event.target.value;
+    const found = PromptStrategies.find((item) => item.id === value);
     if (found) {
+      const clone = Object.assign({}, found);
       this.setState({
         currentStep: this.state.currentStep,
-        promptId: found[0],
-        prompt: found[1],
+        promptId: found.id,
+        prompt: clone,
       });
     } else {
       this.setState({
@@ -142,12 +160,14 @@ export class MasterForm extends React.Component<Properties, State> {
 
           <Step1
             currentStep={this.state.currentStep}
-            prompt={this.state.prompt}
             promptId={this.state.promptId}
             handleChange={this.handlePromptSelectionChange}
           />
           <Step2
             currentStep={this.state.currentStep}
+            prompt={this.state.prompt}
+            promptId={this.state.promptId}
+            handleChange={this.handlePromptDetailChange}
           />
           <Step3
             currentStep={this.state.currentStep}

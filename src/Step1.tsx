@@ -30,7 +30,7 @@ export class Step1 extends React.Component<Step1Properties, State> {
             value={this.props.promptId}
             onChange={this.props.handleChange}
           >
-            {Object.entries(PromptStrategies).map((pair) => <option value={pair[0]} key={pair[0]}>{pair[1].name}</option>)}
+            {PromptStrategies.map((item) => <option value={item.id} key={item.id}>{item.name}</option>)}
           </select>
         </div>
       </div>
