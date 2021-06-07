@@ -20,10 +20,12 @@ export class MasterForm extends React.Component<Properties, State> {
       currentStep: 1,
       promptId: PromptStrategies[0].id,
       prompt: PromptStrategies[0],
+      formValid: true,
     };
 
     this._next = this._next.bind(this);
     this._prev = this._prev.bind(this);
+    this._validateForm = this._validateForm.bind(this);
     this.handlePromptSelectionChange = this.handlePromptSelectionChange.bind(this);
     this.handlePromptDetailChange = this.handlePromptDetailChange.bind(this);
   }
@@ -53,6 +55,16 @@ export class MasterForm extends React.Component<Properties, State> {
   }
 
   /**
+   * Checks the form validity and updates state.
+   */
+  _validateForm(): void {
+    const form = document.getElementById('commandPromptHere') as HTMLFormElement;
+    this.setState({
+      formValid: form.reportValidity(),
+    });
+  }
+
+  /**
    * Gets the 'previous' button for the wizard.
    */
   get previousButton(): JSX.Element | null {
@@ -63,7 +75,8 @@ export class MasterForm extends React.Component<Properties, State> {
         <button
           className="btn btn-secondary"
           type="button"
-          onClick={this._prev}>
+          onClick={this._prev}
+          disabled={!this.state.formValid}>
           Previous
         </button>
       );
@@ -83,7 +96,8 @@ export class MasterForm extends React.Component<Properties, State> {
         <button
           className="btn btn-primary float-right"
           type="button"
-          onClick={this._next}>
+          onClick={this._next}
+          disabled={!this.state.formValid}>
           Next
         </button>
       );
@@ -106,6 +120,7 @@ export class MasterForm extends React.Component<Properties, State> {
       promptId: this.state.promptId,
       prompt: clone,
     });
+    this._validateForm();
   }
 
   /**
@@ -132,20 +147,16 @@ export class MasterForm extends React.Component<Properties, State> {
   }
 
   /**
-   * Handle final form submission.
-   * @param {any} event The event that was raised to indicate submission.
+   * Execute validation on form submission.
+   * @param {React.FormEvent<HTMLFormElement>} event The event that was raised to indicate submission.
    */
-  handleSubmit(event: any): void {
+  handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    alert('Submitted!');
-    // TODO: Figure out how to declare state so we can read from it. Seems we can set it earlier in the constructor.
-    /*
-    const { email, username, password } = this.state;
-    alert(`Your registration detail: \n
-    Email: ${email} \n
-    Username: ${username} \n
-    Password: ${password}`);
-    */
+    event.stopPropagation();
+    event.currentTarget.reportValidity();
+
+    // TODO: Start the download.
+    alert('Download!');
   }
 
   /**
@@ -154,7 +165,7 @@ export class MasterForm extends React.Component<Properties, State> {
    */
   render(): JSX.Element | null {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form id="commandPromptHere" onSubmit={this.handleSubmit} className="needs-validation" noValidate={true}>
         <React.Fragment>
           <h1>Command Prompt Here</h1>
 

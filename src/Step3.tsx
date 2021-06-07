@@ -18,7 +18,6 @@ export class Step3 extends React.Component<Properties, State> {
     }
     // TODO: Wire up the download button.
     // TODO: Add a "start over" button.
-    // TODO: Remove the "previous" button.
     return (
       <div>
         <ol>

@@ -7,4 +7,5 @@ export interface State {
   currentStep: number;
   prompt: PromptStrategy | undefined;
   promptId: string | undefined;
+  formValid: boolean | undefined;
 }
