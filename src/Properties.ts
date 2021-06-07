@@ -30,3 +30,11 @@ export interface Step2Properties extends StepProperties {
   prompt: PromptStrategy | undefined;
   handleChange: React.ChangeEventHandler<HTMLInputElement>;
 }
+
+/**
+ * Properties passed in to render Step 3.
+ */
+export interface Step3Properties extends StepProperties {
+  prompt: PromptStrategy | undefined;
+  startOver: React.MouseEventHandler<HTMLButtonElement>;
+}

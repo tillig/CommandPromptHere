@@ -29,6 +29,7 @@ export interface PromptStrategy {
  * The set of all implemented prompt strategies. The key in the object is the
  * unique ID for use in the INF file and registry.
  */
+// TODO: Finish the list of prompt strategies.
 export const PromptStrategies = [
   {
     id: 'DosHere',

@@ -25,6 +25,7 @@ export class MasterForm extends React.Component<Properties, State> {
 
     this._next = this._next.bind(this);
     this._prev = this._prev.bind(this);
+    this._resetForm = this._resetForm.bind(this);
     this._validateForm = this._validateForm.bind(this);
     this.handlePromptSelectionChange = this.handlePromptSelectionChange.bind(this);
     this.handlePromptDetailChange = this.handlePromptDetailChange.bind(this);
@@ -57,6 +58,18 @@ export class MasterForm extends React.Component<Properties, State> {
   /**
    * Checks the form validity and updates state.
    */
+  _resetForm(): void {
+    this.setState({
+      currentStep: 1,
+      promptId: PromptStrategies[0].id,
+      prompt: PromptStrategies[0],
+      formValid: true,
+    });
+  }
+
+  /**
+   * Checks the form validity and updates state.
+   */
   _validateForm(): void {
     const form = document.getElementById('commandPromptHere') as HTMLFormElement;
     this.setState({
@@ -69,8 +82,8 @@ export class MasterForm extends React.Component<Properties, State> {
    */
   get previousButton(): JSX.Element | null {
     const currentStep = this.state.currentStep;
-    // If the current step is not 1, then render the "previous" button
-    if (currentStep !== 1) {
+    // If the current step is not 1 (start) or 3 (end), then render the "previous" button
+    if (currentStep === 2) {
       return (
         <button
           className="btn btn-secondary"
@@ -182,6 +195,9 @@ export class MasterForm extends React.Component<Properties, State> {
           />
           <Step3
             currentStep={this.state.currentStep}
+            prompt={this.state.prompt}
+            promptId={this.state.promptId}
+            startOver={this._resetForm}
           />
         </React.Fragment>
         {this.previousButton}
