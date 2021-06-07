@@ -10,7 +10,6 @@ import './App.css';
 // Multi-step wizard style form mostly based on this:
 // https://css-tricks.com/the-magic-of-react-based-multi-step-forms/
 // https://www.typescriptlang.org/docs/handbook/jsx.html
-// TODO: Setup GitHub Actions for build.
 
 /**
  * Main application component.
