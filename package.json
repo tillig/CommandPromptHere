@@ -12,6 +12,7 @@
     ]
   },
   "dependencies": {
+    "gh-pages": "^3.2.0",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1"
@@ -30,6 +31,7 @@
     "eslint-plugin-react": "^7.19.0",
     "react-scripts": "^4.0.3"
   },
+  "homepage": "https://tillig.github.io/CommandPromptHere",
   "license": "MIT",
   "name": "command-prompt-here",
   "private": true,
@@ -39,6 +41,8 @@
   },
   "scripts": {
     "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "watch": "tsc -b -w"
