@@ -160,16 +160,13 @@ export class MasterForm extends React.Component<Properties, State> {
   }
 
   /**
-   * Execute validation on form submission.
+   * Execute validation on form submission. Prevents submit - there's no server-side handling.
    * @param {React.FormEvent<HTMLFormElement>} event The event that was raised to indicate submission.
    */
   handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     event.stopPropagation();
     event.currentTarget.reportValidity();
-
-    // TODO: Start the download.
-    alert('Download!');
   }
 
   /**
@@ -178,7 +175,7 @@ export class MasterForm extends React.Component<Properties, State> {
    */
   render(): JSX.Element | null {
     return (
-      <form id="commandPromptHere" onSubmit={this.handleSubmit} className="needs-validation" noValidate={true}>
+      <form id="commandPromptHere" onSubmit={this.handleSubmit}>
         <React.Fragment>
           <h1>Command Prompt Here</h1>
 

@@ -33,13 +33,13 @@ export interface PromptStrategy {
 export const PromptStrategies = [
   {
     id: 'DosHere',
-    accelerator: 'Command &amp;Prompt Here',
+    accelerator: 'Command &Prompt Here',
     commandLine: '%11%\\cmd.exe /k cd /d "%1"',
     name: 'Command Prompt',
   } as PromptStrategy,
   {
     id: 'PowerShellHere',
-    accelerator: 'Po&amp;werShell Prompt Here',
+    accelerator: 'Po&werShell Prompt Here',
     commandLine: '"%11%\\windowspowershell\\v1.0\\powershell.exe" -NoExit "cd \'% 1\'"',
     name: 'PowerShell Prompt',
   } as PromptStrategy,
