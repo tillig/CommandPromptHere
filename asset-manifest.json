@@ -1,20 +1,13 @@
 {
   "files": {
-    "main.css": "/CommandPromptHere/static/css/main.f0d4135b.chunk.css",
-    "main.js": "/CommandPromptHere/static/js/main.1cfb6354.chunk.js",
-    "main.js.map": "/CommandPromptHere/static/js/main.1cfb6354.chunk.js.map",
-    "runtime-main.js": "/CommandPromptHere/static/js/runtime-main.e3f35a72.js",
-    "runtime-main.js.map": "/CommandPromptHere/static/js/runtime-main.e3f35a72.js.map",
-    "static/js/2.40b0b4e4.chunk.js": "/CommandPromptHere/static/js/2.40b0b4e4.chunk.js",
-    "static/js/2.40b0b4e4.chunk.js.map": "/CommandPromptHere/static/js/2.40b0b4e4.chunk.js.map",
+    "main.css": "/CommandPromptHere/static/css/main.88a22644.css",
+    "main.js": "/CommandPromptHere/static/js/main.375cee46.js",
     "index.html": "/CommandPromptHere/index.html",
-    "static/css/main.f0d4135b.chunk.css.map": "/CommandPromptHere/static/css/main.f0d4135b.chunk.css.map",
-    "static/js/2.40b0b4e4.chunk.js.LICENSE.txt": "/CommandPromptHere/static/js/2.40b0b4e4.chunk.js.LICENSE.txt"
+    "main.88a22644.css.map": "/CommandPromptHere/static/css/main.88a22644.css.map",
+    "main.375cee46.js.map": "/CommandPromptHere/static/js/main.375cee46.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.e3f35a72.js",
-    "static/js/2.40b0b4e4.chunk.js",
-    "static/css/main.f0d4135b.chunk.css",
-    "static/js/main.1cfb6354.chunk.js"
+    "static/css/main.88a22644.css",
+    "static/js/main.375cee46.js"
   ]
 }
