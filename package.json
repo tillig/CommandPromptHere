@@ -29,7 +29,7 @@
     "eslint": "^7.28.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.19.0",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^5.0.1"
   },
   "homepage": "https://tillig.github.io/CommandPromptHere",
   "license": "MIT",
