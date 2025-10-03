@@ -115,6 +115,6 @@ export const PromptStrategies = [
     id: 'VS2017ProfessionalDevCmdHere',
     accelerator: 'VS 201&7 Professional Prompt Here',
     commandLine: '%11%\\cmd.exe /v:on /k cd /d "%1" && "!ProgramFiles(x86)!\\Microsoft Visual Studio\\2017\\Professional\\Common7\\Tools\\VsDevCmd.bat"',
-    name: 'VS 2017 Professional Command Promp',
+    name: 'VS 2017 Professional Command Prompt',
   } as PromptStrategy,
 ];
