@@ -13,15 +13,15 @@ import './App.css';
 
 /**
  * Main application component.
- * @return {JSX.Element} Main application container.
+ * @returns {React.JSX.Element} Main application container.
  */
 export class App extends React.Component {
   /**
    * Render the form.
    * @param {Properties} props The properties for the wizard.
-   * @return {React.ReactNode} The node to render.
+   * @returns {React.ReactNode} The node to render.
    */
-  render(): JSX.Element | null {
+  render(): React.JSX.Element | null {
     return (
       <div>
         <header>
@@ -30,9 +30,13 @@ export class App extends React.Component {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
-                <Nav.Link href="https://github.com/tillig/CommandPromptHere">Source on GitHub</Nav.Link>
+                <Nav.Link href="https://github.com/tillig/CommandPromptHere">
+                  Source on GitHub
+                </Nav.Link>
                 <Nav.Link href="https://www.paraesthesia.com">My Blog</Nav.Link>
-                <Nav.Link href="http://app.paraesthesia.com">Other Apps</Nav.Link>
+                <Nav.Link href="http://app.paraesthesia.com">
+                  Other Apps
+                </Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Navbar>

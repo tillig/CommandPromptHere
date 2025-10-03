@@ -8,10 +8,9 @@ import React from 'react';
 export class Step2 extends React.Component<Step2Properties, State> {
   /**
    * Render the form.
-   * @param {Step2Properties} props The properties for the wizard.
-   * @return {JSX.Element} Form fragment to collect the data.
+   * @returns {React.JSX.Element} Form fragment to collect the data.
    */
-  render(): JSX.Element | null {
+  render(): React.JSX.Element | null {
     if (this.props.currentStep !== 2) {
       return null;
     }

@@ -20,14 +20,15 @@ export class MasterForm extends React.Component<Properties, State> {
       currentStep: 1,
       promptId: PromptStrategies[0].id,
       prompt: PromptStrategies[0],
-      formValid: true,
+      formValid: true
     };
 
     this._next = this._next.bind(this);
     this._prev = this._prev.bind(this);
     this._resetForm = this._resetForm.bind(this);
     this._validateForm = this._validateForm.bind(this);
-    this.handlePromptSelectionChange = this.handlePromptSelectionChange.bind(this);
+    this.handlePromptSelectionChange =
+      this.handlePromptSelectionChange.bind(this);
     this.handlePromptDetailChange = this.handlePromptDetailChange.bind(this);
   }
 
@@ -39,7 +40,7 @@ export class MasterForm extends React.Component<Properties, State> {
     // If the current step is 1 or 2, then add one on "next" button click
     currentStep = currentStep >= 2 ? 3 : currentStep + 1;
     this.setState({
-      currentStep: currentStep,
+      currentStep: currentStep
     });
   }
 
@@ -51,7 +52,7 @@ export class MasterForm extends React.Component<Properties, State> {
     // If the current step is 2 or 3, then subtract one on "previous" button click
     currentStep = currentStep <= 1 ? 1 : currentStep - 1;
     this.setState({
-      currentStep: currentStep,
+      currentStep: currentStep
     });
   }
 
@@ -63,7 +64,7 @@ export class MasterForm extends React.Component<Properties, State> {
       currentStep: 1,
       promptId: PromptStrategies[0].id,
       prompt: PromptStrategies[0],
-      formValid: true,
+      formValid: true
     });
   }
 
@@ -71,16 +72,18 @@ export class MasterForm extends React.Component<Properties, State> {
    * Checks the form validity and updates state.
    */
   _validateForm(): void {
-    const form = document.getElementById('commandPromptHere') as HTMLFormElement;
+    const form = document.getElementById(
+      'commandPromptHere'
+    ) as HTMLFormElement;
     this.setState({
-      formValid: form.reportValidity(),
+      formValid: form.reportValidity()
     });
   }
 
   /**
    * Gets the 'previous' button for the wizard.
    */
-  get previousButton(): JSX.Element | null {
+  get previousButton(): React.JSX.Element | null {
     const currentStep = this.state.currentStep;
     // If the current step is not 1 (start) or 3 (end), then render the "previous" button
     if (currentStep === 2) {
@@ -89,7 +92,8 @@ export class MasterForm extends React.Component<Properties, State> {
           className="btn btn-secondary"
           type="button"
           onClick={this._prev}
-          disabled={!this.state.formValid}>
+          disabled={!this.state.formValid}
+        >
           Previous
         </button>
       );
@@ -101,7 +105,7 @@ export class MasterForm extends React.Component<Properties, State> {
   /**
    * Gets the 'next' button for the wizard.
    */
-  get nextButton(): JSX.Element | null {
+  get nextButton(): React.JSX.Element | null {
     const currentStep = this.state.currentStep;
     // If the current step is not 3, then render the "next" button
     if (currentStep < 3) {
@@ -110,7 +114,8 @@ export class MasterForm extends React.Component<Properties, State> {
           className="btn btn-primary float-right"
           type="button"
           onClick={this._next}
-          disabled={!this.state.formValid}>
+          disabled={!this.state.formValid}
+        >
           Next
         </button>
       );
@@ -131,7 +136,7 @@ export class MasterForm extends React.Component<Properties, State> {
     this.setState({
       currentStep: this.state.currentStep,
       promptId: this.state.promptId,
-      prompt: clone,
+      prompt: clone
     });
     this._validateForm();
   }
@@ -140,7 +145,9 @@ export class MasterForm extends React.Component<Properties, State> {
    * Handles a change in selection of the prompt.
    * @param {React.ChangeEvent<HTMLSelectElement>} event The event that was raised to indicate a change.
    */
-  handlePromptSelectionChange(event: React.ChangeEvent<HTMLSelectElement>): void {
+  handlePromptSelectionChange(
+    event: React.ChangeEvent<HTMLSelectElement>
+  ): void {
     const value = event.target.value;
     const found = PromptStrategies.find((item) => item.id === value);
     if (found) {
@@ -148,13 +155,13 @@ export class MasterForm extends React.Component<Properties, State> {
       this.setState({
         currentStep: this.state.currentStep,
         promptId: found.id,
-        prompt: clone,
+        prompt: clone
       });
     } else {
       this.setState({
         currentStep: this.state.currentStep,
         promptId: undefined,
-        prompt: undefined,
+        prompt: undefined
       });
     }
   }
@@ -171,9 +178,9 @@ export class MasterForm extends React.Component<Properties, State> {
 
   /**
    * Renders the wizard form container.
-   * @return {JSX.Element|null} The container for the steps.
+   * @returns {React.JSX.Element|null} The container for the steps.
    */
-  render(): JSX.Element | null {
+  render(): React.JSX.Element | null {
     return (
       <form id="commandPromptHere" onSubmit={this.handleSubmit}>
         <React.Fragment>

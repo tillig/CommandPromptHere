@@ -5,12 +5,22 @@
     "vsvars",
     "windowspowershell"
   ],
+  "eslint.useFlatConfig": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "typescriptreact"
+  ],
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
   "files.exclude": {
     "out": false
   },
+  "javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "search.exclude": {
     "out": true
   },
+  "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
   "typescript.tsc.autoDetect": "off",
   "typescript.tsdk": "./node_modules/typescript/lib"
 }

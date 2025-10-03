@@ -9,10 +9,9 @@ import { PromptStrategies } from './PromptStrategies';
 export class Step1 extends React.Component<Step1Properties, State> {
   /**
    * Render the form.
-   * @param {Step1Properties} props The properties for the wizard.
-   * @return {React.ReactNode} The node to render.
+   * @returns {React.JSX.Element} The node to render.
    */
-  render(): JSX.Element | null {
+  render(): React.JSX.Element | null {
     if (this.props.currentStep !== 1) {
       return null;
     }

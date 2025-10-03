@@ -8,7 +8,7 @@ import React from 'react';
 export class Step3 extends React.Component<Step3Properties, State> {
   /**
    * Constructor.
-   * @param {Properties} props The properties for the workflow.
+   * @param {Step3Properties} props The properties for the workflow.
    */
   constructor(props: Step3Properties) {
     super(props);
@@ -74,7 +74,10 @@ CommandPromptAccel="${this.props.prompt?.accelerator}"
 UDHERE="Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\${this.props.prompt?.id}"
 `;
     const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(infContent));
+    element.setAttribute(
+      'href',
+      'data:text/plain;charset=utf-8,' + encodeURIComponent(infContent)
+    );
     element.setAttribute('download', `${this.props.prompt?.id}.inf`);
     element.style.display = 'none';
     document.body.appendChild(element);
@@ -84,10 +87,9 @@ UDHERE="Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\${this.props.pr
 
   /**
    * Render the form.
-   * @param {Properties} props The properties for the wizard.
-   * @return {JSX.Element} Form fragment to collect the data.
+   * @returns {React.JSX.Element} Form fragment to collect the data.
    */
-  render(): JSX.Element | null {
+  render(): React.JSX.Element | null {
     if (this.props.currentStep !== 3) {
       return null;
     }
@@ -95,9 +97,17 @@ UDHERE="Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\${this.props.pr
       <div>
         <div className="row">
           <ol>
-            <li><strong>Click the button</strong> to download the prompt installer .inf file.</li>
-            <li><strong>Right-click</strong> the saved .inf file.</li>
-            <li><strong>Select &quot;Install&quot;</strong> to install your new context menu command prompt.</li>
+            <li>
+              <strong>Click the button</strong> to download the prompt installer
+              .inf file.
+            </li>
+            <li>
+              <strong>Right-click</strong> the saved .inf file.
+            </li>
+            <li>
+              <strong>Select &quot;Install&quot;</strong> to install your new
+              context menu command prompt.
+            </li>
           </ol>
         </div>
         <div className="row">
@@ -114,7 +124,8 @@ UDHERE="Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\${this.props.pr
             <button
               className="btn btn-secondary"
               type="button"
-              onClick={this.props.startOver}>
+              onClick={this.props.startOver}
+            >
               Start Over
             </button>
           </div>
